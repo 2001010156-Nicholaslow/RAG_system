@@ -9,7 +9,7 @@ This project implements a **RAG AI agent system** using transformers, a routing 
 
 ## Workflow Overview
 
-```mermaid
+```bash
 User Query
    ↓
 Routing Agent
@@ -36,7 +36,7 @@ Routing Agent
 Download from https://www.postgresql.org/download/
 
 Create Docker container for Database and PgAdmin.
-```mermaid
+```bash
 docker pull pgvector/pgvector:pg16
 
 docker volume create pgvector-data
@@ -45,7 +45,7 @@ docker run --name pgvector-container -e POSTGRES_PASSWORD=password -e POSTGRES_D
 ```
 
 PgAdmin
-```mermaid
+```bash
 docker pull dpage/pgadmin4
 
 docker run --name pgadmin-container -p 5050:80 -e PGADMIN_DEFAULT_EMAIL=test@user.com -e PGADMIN_DEFAULT_PASSWORD=password -d dpage/pgadmin4
@@ -55,7 +55,7 @@ docker run --name pgadmin-container -p 5050:80 -e PGADMIN_DEFAULT_EMAIL=test@use
 CREATE EXTENSION IF NOT EXISTS vector;
 
 ### Creating the Table
-```mermaid
+```bash
 CREATE TABLE documents (
     id UUID PRIMARY KEY,
     chunk TEXT NOT NULL,
@@ -133,7 +133,7 @@ When calling LLM calls the retrieval tool, the retrieval tool will pass the whol
 2. Search from DB using inner product/ dot product. Set as 1.4 for similarity score.
 3. Sort by chunk then by grouping chunks by file_hash or document_name.
 
-```mermaid
+```bash
 if confidence < 0.4:
         return {
             "route": "default",
