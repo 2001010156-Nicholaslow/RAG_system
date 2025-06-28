@@ -1,0 +1,31 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Embed File</title>
+</head>
+<body>
+  <h2>Upload File to Embed</h2>
+  <form action="/" method="post" enctype="multipart/form-data">
+    <label>Select file:</label><br>
+    <input type="file" name="file" required><br><br>
+
+    <label>Select permissions:</label><br>
+    <input type="checkbox" name="permissions" value="admin"> Admin<br>
+    <input type="checkbox" name="permissions" value="staff"> Staff<br>
+    <input type="checkbox" name="permissions" value="user"> User<br><br>
+
+    <label>Select category:</label><br>
+    <select name="category" required>
+      <option value="General">General</option>
+      <option value="Finance">Finance</option>
+      <option value="HR">HR</option>
+      <option value="Engineering">Engineering</option>
+      <option value="Legal">Legal</option>
+    </select><br><br>
+
+    <button type="submit">Submit</button>
+  </form>
+</body>
+</html>

@@ -1,0 +1,68 @@
+https://github.com/pgvector/pgvector
+## Step 1
+docker pull pgvector/pgvector:pg16
+
+docker volume create pgvector-data
+
+docker run --name pgvector-container -e POSTGRES_PASSWORD=password -e POSTGRES_DB=vectordb -p 5432:5432 -v pgvector-data:/var/lib/postgresql/data -d pgvector/pgvector:pg16
+
+# Verify its running 
+docker ps
+
+## Step 2 PGadmin
+docker pull dpage/pgadmin4
+
+docker run --name pgadmin-container -p 5050:80 -e PGADMIN_DEFAULT_EMAIL=test@user.com -e PGADMIN_DEFAULT_PASSWORD=P@ssw0rd -d dpage/pgadmin4
+
+
+## To get IP of docker container
+docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" my_pgvector_container
+
+Basic Docker CMDs
+docker ps
+Show all running containers.
+
+docker ps -a
+Show all containers (running and stopped).
+
+docker stop <container>
+Stop a running container.
+
+docker start <container>
+Start a stopped container.
+
+docker restart <container>
+Stop and then start a container.
+
+docker rm <container>
+Remove a container (only works if the container is stopped).
+
+docker logs <container>
+View logs from a container.
+
+How to enter the container:
+docker exec -it my_pgvector_container bash
+ls /var/lib/postgresql/data
+
+
+Table: 
+CREATE EXTENSION IF NOT EXISTS vector;
+
+CREATE TABLE documents (
+    id UUID PRIMARY KEY,
+    chunk TEXT NOT NULL,
+    embedding VECTOR(1024), -- Adjust based on your embedding model dimension
+    document_name TEXT NOT NULL,
+    permissions TEXT[] DEFAULT ARRAY['default'],
+    chunk_index INT NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    file_hash TEXT NOT NULL,
+    metadata JSONB DEFAULT '{}'
+);
+
+If unable to connect, check if port is being used up. " netstat -ano| findstr :5432", tasklist /FI "PID eq 6480", taskkill /PID 6480 /F
+
+#
+docker stop my_pgvector_container
+docker rm my_pgvector_container
+docker volume rm pgvector-data
